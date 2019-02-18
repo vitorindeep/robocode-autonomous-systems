@@ -41,32 +41,29 @@ public class TP1 extends AdvancedRobot
 		// For beggining and end control
 		start = 0;
 		
+		while(start < 1) {
+			go(18,18);
+			execute();
+		}
+		// dar a volta para o campo de batalha e em frente p/ sair do canto
+		turnRight(180);
+		ahead(20);
+		
+		
 		// Robot main loop
 		while(true) {
-		
-			if(start == 0) {
-				go(18,18);
-				execute();
-			}
 			
-			if(start == 1) {
 			// comportamento para fazer a volta
-				setTurnRight(60);
-				ahead(300);
-				setTurnLeft(180);
-				ahead(300);
-				/*ahead(100);
-				turnRight(90);
-				ahead(100);
-				turnRight(135);
-				ahead(141);
-				turnRight(135);*/
-			}
-			
-			else {
-				// comportamento para quem já acabou
-				System.out.println("DONE");
-			}
+			setTurnRight(60);
+			ahead(300);
+			setTurnLeft(180);
+			ahead(300);
+			/*ahead(100);
+			turnRight(90);
+			ahead(100);
+			turnRight(135);
+			ahead(141);
+			turnRight(135);*/
 		}
 	}
 
@@ -81,6 +78,7 @@ public class TP1 extends AdvancedRobot
 	 * onHitByBullet: What to do when you're hit by a bullet
 	 */
 	public void onHitByBullet(HitByBulletEvent e) {
+		System.out.println("$ BULLET");
 		back(10);
 	}
 	
@@ -88,7 +86,9 @@ public class TP1 extends AdvancedRobot
 	 * onHitWall: What to do when you hit a wall
 	 */
 	public void onHitWall(HitWallEvent e) {
+		System.out.println("$ WALL");
 		back(20);
+		turnRight(45);
 	}
 	
 	private void go(double x, double y) {
@@ -124,8 +124,16 @@ public class TP1 extends AdvancedRobot
 		
 		// If our custom event "timer" went off,
 		if(cd.getName().equals("timer")) {
+				
 			this.posX = getX();
 			this.posY = getY();
+
+			// Checking passing by (18,18)
+			if(posX == 18 && posY == 18 && oldX != 18 && oldY != 18) {
+				System.out.println("(18,18)");
+				start++;
+			}
+
 			double aux = Math.sqrt(Math.pow((this.posX -this.oldX),2) + Math.pow((this.posY - this.oldY), 2));
 			this.distanceRoundDone += aux;
 			this.distanceBattleDone += aux;
@@ -134,12 +142,6 @@ public class TP1 extends AdvancedRobot
 			// System.out.println("X: " + this.posX + "\nY: " + this.posY);
 			System.out.println("Distance Round Done: " + this.distanceRoundDone);
 			// System.out.println("Distance Battle Done: " + this.distanceBattleDone);
-			
-			// Checking passing by (18,18)
-			if(getX() == 18 && getY() == 18) {
-				start++;
-				clearAllEvents();
-			}
 		}
 		
 		// PROF ODOMETER: Method for handling the condition of race finished
