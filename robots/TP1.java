@@ -37,6 +37,8 @@ public class TP1 extends AdvancedRobot
 				return (getTime()!=0);
 			}
 		});
+		//Face robot to origin
+		turnRight(225-getHeading());
 		// Go to begining position
 		while(!isRacing)
 			go(18,18);
@@ -63,11 +65,10 @@ public class TP1 extends AdvancedRobot
 	 */
 	public void onScannedRobot(ScannedRobotEvent e) {
 		if(isRacing){
-			ahead(e.getDistance()-75);
-			setTurnLeft(30);
-			ahead(100);
-			setTurnRight(45);
-			ahead(50);
+			ahead(e.getDistance()-51);
+			turnLeft(90);
+			setTurnRight(120);
+			ahead(120);
 			this.turns++;
 		}
 	}
