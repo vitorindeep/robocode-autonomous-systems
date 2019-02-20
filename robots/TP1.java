@@ -65,10 +65,10 @@ public class TP1 extends AdvancedRobot
 	 */
 	public void onScannedRobot(ScannedRobotEvent e) {
 		if(isRacing){
-			ahead(e.getDistance()-51);
+			ahead(e.getDistance()-60);
 			turnLeft(90);
 			setTurnRight(120);
-			ahead(120);
+			ahead(130);
 			this.turns++;
 		}
 	}
