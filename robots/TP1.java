@@ -38,10 +38,8 @@ public class TP1 extends AdvancedRobot
 			}
 		});
 		// Go to begining position
-		while(!isRacing){
+		while(!isRacing)
 			go(18,18);
-			execute();
-		}
 		// Face robot to North
 		turnRight(360-getHeading());
 		// Robot main loop
@@ -49,12 +47,10 @@ public class TP1 extends AdvancedRobot
 			// Searching for others
 			turnRight(1);
 			// Returning to begining
-			if(this.turns>=3){
+			if(this.turns>=3)
 				go(18,18);
-				execute();
-			}
 			// Final prints
-			if(this.posX==18.0 && this.posY==18.0 && isRacing){
+			if(this.posX==18.0 && this.posY==18.0 && isRacing && this.turns>=3){
 				System.out.println("Distance Battle Done TP: " + this.distanceBattleDone);
 				System.out.println("Distance Battle Done OD: " + this.odometer.getRaceDistance());
 				isRacing=false;
@@ -76,6 +72,14 @@ public class TP1 extends AdvancedRobot
 		}
 	}
 	
+	/**
+	 * onHitRobot: What to do when you see another robot
+	 */
+	
+	public void onHitRobot(HitRobotEvent e){
+		back(10);
+	}
+
 	/**
 	 * onCustomEvent handler
 	 */
@@ -102,6 +106,6 @@ public class TP1 extends AdvancedRobot
     	x = x - getX(); y = y - getY();
 	    double goAngle = Utils.normalRelativeAngle(Math.atan2(x, y) - getHeadingRadians());
 	    setTurnRightRadians(Math.atan(Math.tan(goAngle)));
-	    setAhead(Math.cos(goAngle) * Math.hypot(x, y));
+	    ahead(Math.cos(goAngle) * Math.hypot(x, y));
 	}
 }
