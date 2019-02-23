@@ -65,10 +65,10 @@ public class TP1 extends AdvancedRobot
 	 */
 	public void onScannedRobot(ScannedRobotEvent e) {
 		if(isRacing){
-			ahead(e.getDistance()-60);
-			turnLeft(90);
-			setTurnRight(120);
-			ahead(130);
+			turnLeft(e.getBearing()*2);
+			ahead(e.getDistance()+18);
+			setTurnRight(60);
+			ahead(30);
 			this.turns++;
 		}
 	}
@@ -78,9 +78,21 @@ public class TP1 extends AdvancedRobot
 	 */
 	
 	public void onHitRobot(HitRobotEvent e){
-		back(10);
+		setTurnLeft(10);
+		back(20);
 	}
-
+	
+	/**
+	 * onHitWall: What to do when you hit a wall
+	 */
+	public void onHitWall(HitWallEvent e) {
+		if(isRacing){
+			turnRight(e.getBearing());
+			turnRight(90);
+			ahead(60);
+		}
+	}
+	
 	/**
 	 * onCustomEvent handler
 	 */
