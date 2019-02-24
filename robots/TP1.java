@@ -53,7 +53,7 @@ public class TP1 extends AdvancedRobot
 				go(18,18);
 			// Final prints
 			if(this.posX==18.0 && this.posY==18.0 && isRacing && this.turns>=3){
-				System.out.println("Distance Battle Done TP: " + this.distanceBattleDone);
+				System.out.println("Distance Battle Done TP: " + this.distanceRoundDone);
 				System.out.println("Distance Battle Done OD: " + this.odometer.getRaceDistance());
 				isRacing=false;
 			}
