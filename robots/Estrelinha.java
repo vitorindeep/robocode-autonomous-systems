@@ -5,18 +5,15 @@
  * which accompanies this distribution, and is available at
  * https://robocode.sourceforge.io/license/epl-v10.html
  */
-package sample;
-
+package TP;
 
 import robocode.*;
 import robocode.util.Utils;
-
 import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.geom.Point2D;
 import java.util.*;
-
 
 /**
  * 
@@ -125,6 +122,16 @@ public class Estrelinha extends TeamRobot {
 	public void onScannedRobot(ScannedRobotEvent scannedRobotEvent) {
 		// Check that the scanned robot is not a sentry robot
 		if (!isTeammate(scannedRobotEvent.getName())) {
+		
+			double enemyBearing = this.getHeading() + e.getBearing();
+			double enemyX = getX() + e.getDistance() * Math.sin(Math.toRadians(enemyBearing));
+			double enemyY = getY() + e.getDistance() * Math.cos(Math.toRadians(enemyBearing));
+			try {
+				broadcastMessage(new Enemy(e.getName(), enemyX, enemyY));
+			} catch (IOException ex) {
+				ex.printStackTrace(out);
+			}		
+
 			// The scanned robot is not a friendly robot...
 
 			// Update the enemy map
