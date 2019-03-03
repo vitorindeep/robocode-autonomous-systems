@@ -14,6 +14,7 @@ import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.geom.Point2D;
 import java.util.*;
+import java.io.IOException;
 
 /**
  * 
@@ -123,11 +124,11 @@ public class Estrelinha extends TeamRobot {
 		// Check that the scanned robot is not a sentry robot
 		if (!isTeammate(scannedRobotEvent.getName())) {
 		
-			double enemyBearing = this.getHeading() + e.getBearing();
-			double enemyX = getX() + e.getDistance() * Math.sin(Math.toRadians(enemyBearing));
-			double enemyY = getY() + e.getDistance() * Math.cos(Math.toRadians(enemyBearing));
+			double enemyBearing = this.getHeading() + scannedRobotEvent.getBearing();
+			double enemyX = getX() + scannedRobotEvent.getDistance() * Math.sin(Math.toRadians(enemyBearing));
+			double enemyY = getY() + scannedRobotEvent.getDistance() * Math.cos(Math.toRadians(enemyBearing));
 			try {
-				broadcastMessage(new Enemy(e.getName(), enemyX, enemyY));
+				broadcastMessage(new Enemy(scannedRobotEvent.getName(), enemyX, enemyY));
 			} catch (IOException ex) {
 				ex.printStackTrace(out);
 			}		
@@ -342,7 +343,7 @@ public class Estrelinha extends TeamRobot {
 			}
 		}
 		// Set ahead 100 units forward or backward depending on the direction
-		setAhead(100 * direction);
+		setAhead(200 * direction);
 	}
 
 	/**
@@ -725,6 +726,17 @@ public class Estrelinha extends TeamRobot {
 
 			// Return the position as a point (x,y)
 			return new Point2D.Double(x, y);
+		}
+	}
+	
+	public void onMessageReceived(MessageEvent e) {
+		if (e.getMessage() instanceof RobotColors) {
+			RobotColors c = (RobotColors) e.getMessage();
+			setBodyColor(c.bodyColor);
+			setGunColor(c.gunColor);
+			setRadarColor(c.radarColor);
+			setScanColor(c.scanColor);
+			setBulletColor(c.bulletColor);
 		}
 	}
 }
