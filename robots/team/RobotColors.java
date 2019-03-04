@@ -1,4 +1,4 @@
-package TP;
+package sampleteam;
 
 import java.awt.*;
 

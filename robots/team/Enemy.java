@@ -1,4 +1,4 @@
-package TP;
+package sampleteam;
 
 public class Enemy implements java.io.Serializable {
 
