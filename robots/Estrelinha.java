@@ -5,7 +5,7 @@
  * which accompanies this distribution, and is available at
  * https://robocode.sourceforge.io/license/epl-v10.html
  */
-package TP;
+package sampleteam;
 
 import robocode.*;
 import robocode.util.Utils;
@@ -478,7 +478,6 @@ public class Estrelinha extends TeamRobot {
 		if(getTime() > lastTimeUpdatedTarget + 100 || target == null) {
 
 			lastTimeUpdatedTarget = getTime();
-			System.out.println(lastTimeUpdatedTarget);
 			
 			// Set target to null, meaning that we have no target robot yet
 			target = null;
@@ -537,9 +536,11 @@ public class Estrelinha extends TeamRobot {
 		// We only fire the fun, when we have a target robot
 		if (target != null) {
 			// Only fire when the angle of the gun is pointing at our (virtual) target robot
-
+			
 			// Calculate the distance between between our robot and the target robot
-			double dist = distanceTo(target.targetX, target.targetY);
+			double x = target.targetX;
+			double y = target.targetY;
+			double dist = distanceTo(x, y);
 			// Angle that "covers" the the target robot from its center to its edge
 			double angle = Math.atan(HALF_ROBOT_SIZE / dist);
 
@@ -547,7 +548,22 @@ public class Estrelinha extends TeamRobot {
 			// angle
 			if (Math.abs(getGunTurnRemaining()) < angle) {
 				// If so, our gun should be pointing at our target so we can hit it => fire!!
-				setFire(FIREPOWER);
+				if((distanceTo(x, y) <= 200) && 
+					(getEnergy()/2 > FIREPOWER)) {
+						System.out.println("Close fire.");
+						setFire(FIREPOWER);
+					}
+				else
+				if ((distanceTo(x, y) <= 400) && 
+					(getEnergy()/2 > FIREPOWER/2)) {
+						System.out.println("Medium fire.");
+						setFire(FIREPOWER/2);
+					}
+				else 
+				if (getEnergy()/2 > FIREPOWER/3) {
+					System.out.println("Long fire.");
+					setFire(FIREPOWER/3);
+				}
 			}
 		}
 	}
@@ -568,7 +584,7 @@ public class Estrelinha extends TeamRobot {
 		double maxBorderX = getBattleFieldWidth() - getSentryBorderSize();
 		double maxBorderY = getBattleFieldHeight() - getSentryBorderSize();
 
-		return (distanceTo(x, y) > (getBattleFieldWidth() / 3 * 4));
+		return (distanceTo(x, y) > (getBattleFieldWidth() / 4 * 3));
 	}
 
 	/**
